@@ -1,0 +1,32 @@
+# start zookeeper (make sure nothing is running on port 2181)
+zookeeper-server-start.bat config\zookeeper.properties
+
+# start Kafka
+kafka-server-start.bat config\server.properties
+
+
+CLI 
+# list brokers
+zookeeper-shell localhost:2181 ls /brokers/ids
+
+
+
+# list topics
+kafka-topics --zookeeper localhost:2181 --list
+
+# topic creation
+kafka-topics --zookeeper localhost:2181 --topic first_topic --create --partitions 3 --replication-factor 1
+
+# topic detail
+kafka-topics --zookeeper localhost:2181 --topic first_topic --describe
+
+# topic edition
+kafka-topics --zookeeper localhost:2181  --alter --topic first_topic --partitions 3 --replication-factor 3
+
+
+# topic delete
+kafka-topics --zookeeper localhost:2181 --topic first_topic --delete
+
+
+# consumer
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group my-first-application
